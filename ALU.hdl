@@ -45,5 +45,11 @@ CHIP ALU {
         ng; // 1 if (out<0),  0 otherwise
 
     PARTS:
-   // Put you code here:
+    LogicCircuit(in=x, zin=zx, nin=nx, out=modified-x);
+    LogicCircuit(in=y, zin=zy, nin=ny, out=modified-y);
+    And16(a=modified-x, b=modified-y, out=and-xy);
+    Add16(a=modified-x, b=modified-y, out=sum-xy);
+    Mux16(a=and-xy, b=sum-xy, sel=f, out=result);
+    LogicCircuit(in=result, zin=false, nin=no, out=modified-result, out=out);
+    Comparator(in=modified-result, eqz=zr, ltz=ng);
 }
