@@ -1,0 +1,15 @@
+CHIP LogicCircuit {
+    IN  
+        in[16], // the 16-bit input      
+        zin, // zero the input?
+        nin; // negate the input?
+
+
+    OUT 
+        out[16]; // 16-bit output
+
+    PARTS:
+    Mux16(a=in, b=false, sel=zin, out=zeroed);
+    Not16(in=zeroed, out=inverted);
+    Mux16(a=zeroed, b=inverted, sel=nin, out=out);
+}
