@@ -1,0 +1,15 @@
+CHIP Comparator {
+    IN  
+        in[16]; // 16-bit input      
+
+    OUT 
+        eqz, // 1 if in == 0, otherwise 0
+        ltz; // 1 if in < 0, otherwise 0
+
+    PARTS:
+    Or8Way(in=in[0..7], out=lower);
+    Or8Way(in=in[8..15], out=upper);
+    Or(a=upper, b=lower, out=not-zero);
+    Not(in=not-zero, out=eqz);
+    And(a=in[15], b=true, out=ltz);
+}
